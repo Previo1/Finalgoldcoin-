@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             background: #000;
-            color: white;
+            color: #fff;
             text-align: center;
             padding: 20px;
             padding-bottom: 80px;
@@ -25,12 +25,12 @@
             border: 1px solid gold;
         }
         nav a {
-            color: #FFD700;
+            color: gold;
             text-decoration: none;
             font-weight: bold;
         }
-        nav a:hover { color: #FFA500; }
-        #mineBtn, #autoMiningBtn {
+        nav a:hover { color: #ffcc00; }
+        #mineBtn, #autoMiningBtn, #unlockNowBtn {
             padding: 10px 20px;
             border: none;
             border-radius: 8px;
@@ -38,11 +38,9 @@
             cursor: pointer;
             margin: 10px;
         }
-        #mineBtn { background: #FFD700; color: black; }
-        #mineBtn:hover { background: #FFC107; }
-        #autoMiningBtn { background: #FFA500; color: black; }
-        #autoMiningBtn:hover { background: #FF8C00; }
-
+        #mineBtn { background: gold; color: black; }
+        #autoMiningBtn { background: orange; color: black; }
+        #unlockNowBtn { background: red; color: white; display: none; }
         .block {
             border: 1px solid gold;
             margin: 10px auto;
@@ -61,8 +59,9 @@
             animation: fall linear forwards;
             z-index: 9999;
         }
-        @keyframes fall { to { transform: translateY(100vh); opacity: 0; } }
-
+        @keyframes fall {
+            to { transform: translateY(100vh); opacity: 0; }
+        }
         footer {
             position: fixed;
             bottom: 0;
@@ -76,241 +75,225 @@
             padding: 8px 0;
         }
         footer a {
-            color: #FFD700;
+            color: gold;
             text-decoration: none;
             font-weight: bold;
         }
-        footer a:hover { color: #FFA500; transform: scale(1.05); }
-
-        .wallet-btn {
-            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
-            color: black;
-            font-weight: bold;
-            border: 2px solid gold;
-            border-radius: 8px;
-            padding: 8px 15px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-            transition: all 0.3s ease;
-        }
-        .wallet-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
-        }
-        .unlock-gold-btn {
-            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
-            color: black;
-            font-weight: bold;
-            border: 2px solid gold;
-            border-radius: 8px;
-            padding: 8px 15px;
-            cursor: pointer;
-            font-size: 14px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-            transition: all 0.3s ease;
-            animation: shine 2s infinite linear;
-        }
-        .unlock-gold-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
-        }
-        @keyframes shine {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        footer a:hover { color: #ffcc00; transform: scale(1.05); }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#">⛏ Mining</a>
-        <a href="#referral">🤝 Referral</a>
-    </nav>
+<nav>
+    <a href="#">⛏ Mining</a>
+    <a href="#referral">🤝 Referral</a>
+</nav>
 
-    <!-- Mining Section -->
-    <h1>⛏ Gold Coin Miner</h1>
-    <h1 id="bigBalance" style="font-size: 36px; color:#FFD700; font-weight:bold; margin-top:10px;">0 🪙</h1>
-    <p id="status">Ready to mine...</p>
-    <button id="mineBtn">⛏ Mine Block</button>
-    <div>
-        <button id="autoMiningBtn">▶ Start Auto Mining</button>
-        <p id="autoMiningStatus">Auto Mining: OFF</p>
-        <p id="autoMiningLockMsg" style="color: red; font-size: 14px;"></p>
-        <button id="unlockNowBtn" style="display:none;" class="unlock-gold-btn">🔓 Unlock Now (10 Coins)</button>
-        <small id="unlockBalanceInfo" style="color: yellow; display:block; margin-top:5px;"></small>
-    </div>
+<!-- Mining Section -->
+<h1>⛏ Gold Coin Miner</h1>
+<h1 id="bigBalance" style="font-size: 36px; color:gold; font-weight:bold;">0 🪙</h1>
+<p id="status">Ready to mine...</p>
+<button id="mineBtn">⛏ Mine Block</button>
+<div>
+    <button id="autoMiningBtn">▶ Start Auto Mining</button>
+    <p id="autoMiningStatus">Auto Mining: OFF</p>
+    <p id="autoMiningLockMsg" style="color: red;"></p>
+    <button id="unlockNowBtn">🔓 Unlock Now (10 🪙)</button>
+    <p id="unlockBalanceInfo" style="color: gold;"></p>
+</div>
 
-    <!-- Refer & Earn -->
-    <div id="referral" style="margin:20px; padding:15px; background:#111; border:1px solid gold; border-radius:10px; text-align:center;">
-        <p style="font-weight:bold; color:#FFD700;">📢 Refer and Earn</p>
-        <a href="https://t.me/share/url?url=https://t.me/goldcoinmining&text=Join%20Gold%20Coin%20Mining%20and%20earn!"
-           target="_blank"
-           style="display:inline-block; background:#FFD700; padding:8px 15px; border-radius:6px; text-decoration:none; font-weight:bold; color:black; border:1px solid gold; margin-bottom:10px;">
-           📤 Refer Friend
-        </a>
-        <p>Join our channel and earn 1000 🪙</p>
-        <a href="https://t.me/goldcoinmining" target="_blank" style="color:#FFD700; text-decoration:none;">🔗 Join Channel</a>
-    </div>
+<!-- Referral Section -->
+<div id="referral" style="margin:20px; padding:15px; background:#111; border:1px solid gold; border-radius:10px; text-align:center;">
+    <p style="font-weight:bold; color:gold;">📢 Refer and Earn</p>
+    <p>You will get 50 🪙 directly in your wallet for each valid referral.</p>
 
-    <!-- Wallet -->
-    <div id="wallet" style="margin:20px; padding:20px; background:#111; border-radius:12px; border:1px solid gold; color:white;">
-        <h2 style="text-align:center; color:#FFD700;">💰 Wallet</h2>
-        <p><b>Wallet Balance:</b> <span id="walletBalance">0</span> 🪙</p>
-        <p style="font-size:14px; color:#bbb;">(Wallet updates every 24 hours)</p>
-        <button id="connectWalletBtn" class="wallet-btn">🔗 Connect Telegram Wallet</button>
-        <p id="walletStatus" style="margin-top:10px; color:#FFD700;"></p>
-        <button id="withdrawBtn" class="wallet-btn" style="display:none; margin-top: 10px;">💸 Withdraw Coins</button>
-        <div style="margin-top:15px; background:#222; border:1px solid gold; border-radius:10px; padding:10px;">
-            <h3>Transaction History</h3>
-            <ul id="walletHistory" style="list-style:none; padding-left:0; max-height:150px; overflow-y:auto; color:white;"></ul>
-        </div>
-    </div>
+    <a href="https://t.me/share/url?url=https://t.me/goldcoinmining&text=Join%20this%20Gold%20Coin%20Bot%20and%20start%20earning%20coins!"
+       target="_blank"
+       id="referLink"
+       style="display:inline-block; background:gold; padding:8px 15px; border-radius:6px; text-decoration:none; font-weight:bold; color:black; margin-bottom:10px;">
+       📤 Refer Friend
+    </a>
 
-    <footer>
-        <a href="#wallet">💰 Wallet</a>
-        <a href="#referral">🤝 Referral</a>
-    </footer>
+    <p id="referralInfo" style="margin-top:10px; color:gold;">Referral Count: <span id="referralCount">0</span></p>
 
-    <script>
-        const totalSupply = 21000000;
-        let blockchain = JSON.parse(localStorage.getItem("blockchain")) || [
-            { index: 0, timestamp: new Date().toISOString(), previousHash: "0", hash: "GENESIS_HASH", transactions: ["Genesis Reward 100 🪙"], nonce: 0 }
-        ];
-        let balance = parseInt(localStorage.getItem("balance")) || 100;
-        let totalCoins = parseInt(localStorage.getItem("totalCoins")) || 100;
-        let miningPower = parseFloat(localStorage.getItem("miningPower")) || 1;
-        let autoMiningLockTime = parseInt(localStorage.getItem("autoMiningLockTime")) || 0;
-        let telegramWalletConnected = JSON.parse(localStorage.getItem("telegramWalletConnected")) || false;
-        let walletHistory = JSON.parse(localStorage.getItem("walletHistory")) || [];
+    <p style="margin-top:10px;">📌 Join our channel and earn 1000 🪙</p>
+    <a href="https://t.me/goldcoinmining" target="_blank"
+       style="display:inline-block; background:orange; padding:8px 15px; border-radius:6px; text-decoration:none; font-weight:bold; color:black;">
+       🔗 Join Channel
+    </a>
+</div>
 
-        const ctx = document.getElementById("miningPie")?.getContext("2d");
+<!-- Wallet -->
+<div id="wallet" style="margin:20px; padding:20px; background:#111; border-radius:12px; border:1px solid gold;">
+    <h2 style="color:gold;">💰 Wallet</h2>
+    <p><b>Wallet Balance:</b> <span id="walletBalance">0</span> 🪙</p>
+    <p style="font-size:14px; color:#aaa;">(Wallet updates every 24 hours)</p>
 
-        function updateUI() {
-            document.getElementById("bigBalance").innerText = balance + " 🪙";
-            document.getElementById("walletBalance").innerText = balance;
+    <button id="connectWalletBtn" style="background:gold; color:black; padding:8px 15px; border:none; border-radius:8px; margin-top:10px;">
+        🔗 Connect Telegram Wallet
+    </button>
+    <p id="walletStatus" style="color:gold; margin-top:8px;"></p>
+
+    <button id="withdrawBtn" style="background:orange; color:black; padding:8px 15px; border:none; border-radius:8px; margin-top:10px;">
+        🏦 Withdraw Coins
+    </button>
+    <p id="withdrawStatus" style="color:gold; margin-top:8px;"></p>
+</div>
+
+<footer>
+    <a href="#wallet">💰 Wallet</a>
+    <a href="#referral">🤝 Referral</a>
+</footer>
+
+<script>
+    let balance = parseInt(localStorage.getItem("balance")) || 100;
+    let walletBalance = parseInt(localStorage.getItem("walletBalance")) || balance;
+    let referralCount = parseInt(localStorage.getItem("referralCount")) || 0;
+    let miningPower = parseFloat(localStorage.getItem("miningPower")) || 1;
+    let autoMiningLockTime = parseInt(localStorage.getItem("autoMiningLockTime")) || 0;
+    let telegramWallet = localStorage.getItem("telegramWallet") || null;
+
+    function updateUI() {
+        document.getElementById("bigBalance").innerText = balance + " 🪙";
+        document.getElementById("walletBalance").innerText = walletBalance;
+        checkAutoMiningLock();
+        localStorage.setItem("balance", balance);
+        localStorage.setItem("walletBalance", walletBalance);
+    }
+
+    function coinRain(count = 10) {
+        for (let i = 0; i < count; i++) {
+            const coin = document.createElement("div");
+            coin.classList.add("coin");
+            coin.innerHTML = "🪙";
+            coin.style.left = Math.random() * window.innerWidth + "px";
+            coin.style.animationDuration = (Math.random() * 2 + 2) + "s";
+            document.body.appendChild(coin);
+            setTimeout(() => coin.remove(), 3000);
         }
+    }
 
-        // Coin Rain
-        function coinRain(count = 10) {
-            for (let i = 0; i < count; i++) {
-                const coin = document.createElement("div");
-                coin.classList.add("coin");
-                coin.innerHTML = "🪙";
-                coin.style.left = Math.random() * window.innerWidth + "px";
-                coin.style.animationDuration = (Math.random() * 2 + 2) + "s";
-                document.body.appendChild(coin);
-                setTimeout(() => coin.remove(), 3000);
-            }
-        }
-
-        function generateHash() {
-            return Array.from({ length: 64 }, () => "abcdef0123456789"[Math.floor(Math.random() * 16)]).join("");
-        }
-
-        // Mining
-        document.getElementById("mineBtn").onclick = mineBlock;
-        function mineBlock() {
-            balance += 10 * miningPower;
-            totalCoins += 10 * miningPower;
-            localStorage.setItem("balance", balance);
-            localStorage.setItem("totalCoins", totalCoins);
-            updateUI();
-            coinRain(10);
-        }
-
-        // Auto Mining
-        document.getElementById("autoMiningBtn").onclick = () => {
-            if (autoMiningLockTime && Date.now() < autoMiningLockTime) {
-                alert("⛔ Auto Mining Locked!");
-                return;
-            }
-            if (window.autoMiningInterval) {
-                clearInterval(window.autoMiningInterval);
-                window.autoMiningInterval = null;
-                document.getElementById("autoMiningStatus").innerText = "Auto Mining: OFF";
-            } else {
-                window.autoMiningInterval = setInterval(mineBlock, 500);
-                document.getElementById("autoMiningStatus").innerText = "Auto Mining: ON";
-                autoMiningLockTime = Date.now() + 12 * 60 * 60 * 1000;
-                localStorage.setItem("autoMiningLockTime", autoMiningLockTime);
-            }
-        };
-
-        // Unlock Now
-        document.getElementById("unlockNowBtn").onclick = () => {
-            if (balance < 10) {
-                alert("⚠ પૂરતા coins નથી!");
-                return;
-            }
-            if (confirm("🔓 Unlock કરવા માટે 10 coins કપાશે.")) {
-                balance -= 10;
-                localStorage.setItem("balance", balance);
-                autoMiningLockTime = 0;
-                localStorage.removeItem("autoMiningLockTime");
-                document.getElementById("autoMiningLockMsg").innerText = "";
-                document.getElementById("unlockNowBtn").style.display = "none";
-                document.getElementById("unlockBalanceInfo").innerText = "";
-                updateUI();
-            }
-        };
-
-        // Wallet
-        function generateTransactionHash() {
-            return "0x" + Array.from({ length: 16 }, () => "abcdef0123456789"[Math.floor(Math.random() * 16)]).join("");
-        }
-
-        function renderWalletHistory() {
-            const historyEl = document.getElementById("walletHistory");
-            historyEl.innerHTML = "";
-            walletHistory.slice().reverse().forEach(entry => {
-                const li = document.createElement("li");
-                li.innerHTML = `<b>${entry.amount} 🪙 Withdraw</b><br>
-                                <span style="font-size:12px; color:#aaa;">${entry.time}</span><br>
-                                <span style="font-size:12px; color:#FFD700;">Tx: ${entry.hash}</span>`;
-                historyEl.appendChild(li);
-            });
-        }
-
-        document.getElementById("connectWalletBtn").onclick = () => {
-            if (!telegramWalletConnected) {
-                telegramWalletConnected = true;
-                localStorage.setItem("telegramWalletConnected", true);
-                document.getElementById("walletStatus").innerText = "✅ Telegram Wallet connected!";
-                document.getElementById("withdrawBtn").style.display = "inline-block";
-            } else {
-                alert("Wallet already connected.");
-            }
-        };
-
-        document.getElementById("withdrawBtn").onclick = () => {
-            if (balance < 100) {
-                alert("⚠ ઓછામાં ઓછા 100 Coins જોઈએ!");
-                return;
-            }
-            alert("💸 Withdraw request submitted!");
-            const transaction = {
-                amount: balance,
-                time: new Date().toLocaleString(),
-                hash: generateTransactionHash()
-            };
-            walletHistory.push(transaction);
-            localStorage.setItem("walletHistory", JSON.stringify(walletHistory));
-            renderWalletHistory();
-            balance = 0;
-            localStorage.setItem("balance", balance);
-            updateUI();
-        };
-
-        if (telegramWalletConnected) {
-            document.getElementById("walletStatus").innerText = "✅ Telegram Wallet connected!";
-            document.getElementById("withdrawBtn").style.display = "inline-block";
-        }
-
-        renderWalletHistory();
+    document.getElementById("mineBtn").onclick = () => {
+        miningPower = referralCount >= 5 ? 2 : 1; 
+        balance += 10 * miningPower;
+        walletBalance += 10 * miningPower;
         updateUI();
-    </script>
+        coinRain(10);
+    };
+
+    document.getElementById("autoMiningBtn").onclick = () => {
+        if (autoMiningLockTime && Date.now() < autoMiningLockTime) {
+            alert("⛔ Auto Mining Locked!");
+            return;
+        }
+        if (window.autoMiningInterval) {
+            clearInterval(window.autoMiningInterval);
+            window.autoMiningInterval = null;
+            document.getElementById("autoMiningStatus").innerText = "Auto Mining: OFF";
+        } else {
+            window.autoMiningInterval = setInterval(() => {
+                miningPower = referralCount >= 5 ? 2 : 1;
+                balance += 10 * miningPower;
+                walletBalance += 10 * miningPower;
+                updateUI();
+                coinRain(10);
+            }, 500);
+            document.getElementById("autoMiningStatus").innerText = "Auto Mining: ON";
+            autoMiningLockTime = Date.now() + 12 * 60 * 60 * 1000;
+            localStorage.setItem("autoMiningLockTime", autoMiningLockTime);
+            checkAutoMiningLock();
+        }
+    };
+
+    function checkAutoMiningLock() {
+        const lockMsg = document.getElementById("autoMiningLockMsg");
+        const unlockBtn = document.getElementById("unlockNowBtn");
+        const unlockInfo = document.getElementById("unlockBalanceInfo");
+
+        if (autoMiningLockTime && Date.now() < autoMiningLockTime) {
+            const remainingHours = Math.ceil((autoMiningLockTime - Date.now()) / (60 * 60 * 1000));
+            lockMsg.innerText = `⛔ Auto Mining Locked! It will unlock in ${remainingHours} hours.`;
+            unlockBtn.style.display = "inline-block";
+            unlockInfo.innerText = "🔓 Unlock by deducting 10 🪙";
+        } else {
+            lockMsg.innerText = "";
+            unlockBtn.style.display = "none";
+            unlockInfo.innerText = "";
+        }
+    }
+
+    document.getElementById("unlockNowBtn").onclick = () => {
+        if (walletBalance < 10) {
+            alert("⚠ Not enough coins!");
+            return;
+        }
+        if (confirm("🔓 Unlocking will deduct 10 coins.")) {
+            walletBalance -= 10;
+            autoMiningLockTime = 0;
+            localStorage.removeItem("autoMiningLockTime");
+            updateUI();
+            alert("✅ Auto Mining Unlocked!");
+        }
+    };
+
+    function updateWalletStatus() {
+        const walletStatus = document.getElementById("walletStatus");
+        if (telegramWallet) {
+            walletStatus.innerText = `✅ Connected: ${telegramWallet}`;
+            document.getElementById("connectWalletBtn").innerText = "🔗 Wallet Connected";
+            document.getElementById("connectWalletBtn").disabled = true;
+        } else {
+            walletStatus.innerText = "⚠ Wallet not connected";
+        }
+    }
+
+    document.getElementById("connectWalletBtn").onclick = () => {
+        const walletAddress = prompt("Enter your Telegram TON Wallet Address:");
+        if (walletAddress && walletAddress.length > 20) {
+            telegramWallet = walletAddress;
+            localStorage.setItem("telegramWallet", telegramWallet);
+            updateWalletStatus();
+            alert("✅ Wallet Connected Successfully!");
+        } else {
+            alert("⚠ Invalid Wallet Address!");
+        }
+    };
+
+    document.getElementById("withdrawBtn").onclick = () => {
+        if (!telegramWallet) {
+            alert("⚠ First connect your Telegram Wallet!");
+            return;
+        }
+        if (walletBalance < 100) {
+            alert("⚠ Minimum 100 🪙 required for withdrawal!");
+            return;
+        }
+
+        if (confirm(`🏦 Withdraw ${walletBalance} 🪙 to ${telegramWallet}?`)) {
+            document.getElementById("withdrawStatus").innerText = `✅ Withdrawal request sent for ${walletBalance} 🪙`;
+            walletBalance = 0;
+            updateUI();
+        }
+    };
+
+    document.getElementById("referLink").onclick = () => {
+        setTimeout(() => {
+            const confirmReferral = confirm("✅ Did your friend join via your referral link? (Test Mode)");
+            if (confirmReferral) {
+                referralCount++;
+                localStorage.setItem("referralCount", referralCount);
+                walletBalance += 50;
+                localStorage.setItem("walletBalance", walletBalance);
+                document.getElementById("referralCount").innerText = referralCount;
+                updateUI();
+                alert("🎉 50 🪙 added to your wallet for referral!");
+            }
+        }, 1000);
+    };
+
+    document.getElementById("referralCount").innerText = referralCount;
+    updateWalletStatus();
+    updateUI();
+</script>
 </body>
 </html>
