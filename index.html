@@ -7,31 +7,29 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to top, #000000, #ffffff);
-            color: #000;
+            background: #000;
+            color: white;
             text-align: center;
             padding: 20px;
             padding-bottom: 80px;
             overflow-x: hidden;
         }
         nav {
-            background: #FFD700;
+            background: #111;
             padding: 10px;
             display: flex;
             justify-content: center;
             gap: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
-            border: 2px solid gold;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border: 1px solid gold;
         }
         nav a {
-            color: #000;
+            color: #FFD700;
             text-decoration: none;
             font-weight: bold;
-            font-size: 16px;
         }
-        nav a:hover { color: #ff8c00; }
+        nav a:hover { color: #FFA500; }
         #mineBtn, #autoMiningBtn {
             padding: 10px 20px;
             border: none;
@@ -40,26 +38,22 @@
             cursor: pointer;
             margin: 10px;
         }
-        #mineBtn { background: #FFD700; color: black; font-weight: bold; }
+        #mineBtn { background: #FFD700; color: black; }
         #mineBtn:hover { background: #FFC107; }
-        #autoMiningBtn { background: #FFA500; color: black; font-weight: bold; }
+        #autoMiningBtn { background: #FFA500; color: black; }
         #autoMiningBtn:hover { background: #FF8C00; }
-        #status {
-            font-size: 20px;
-            font-weight: bold;
-            color: #444;
-            margin-bottom: 10px;
-        }
+
         .block {
             border: 1px solid gold;
             margin: 10px auto;
             padding: 10px;
             width: 90%;
             border-radius: 8px;
-            background: #fff8dc;
+            background: #111;
             text-align: left;
+            color: white;
         }
-        .hash { font-size: 12px; color: #555; }
+        .hash { font-size: 12px; color: #aaa; }
         .coin {
             position: fixed;
             top: -50px;
@@ -67,240 +61,256 @@
             animation: fall linear forwards;
             z-index: 9999;
         }
-        @keyframes fall {
-            to { transform: translateY(100vh); opacity: 0; }
-        }
+        @keyframes fall { to { transform: translateY(100vh); opacity: 0; } }
+
         footer {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #fff8dc;
-            border-top: 2px solid gold;
+            background: #111;
+            border-top: 1px solid gold;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 12px 0;
+            padding: 8px 0;
         }
         footer a {
-            color:#b8860b;
-            text-decoration:none;
-            font-weight:bold;
-            font-size: 18px;
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: bold;
         }
-        footer a:hover { color:#ff8c00; transform:scale(1.05); }
-        .hidden-section {
-            display: none;
+        footer a:hover { color: #FFA500; transform: scale(1.05); }
+
+        .wallet-btn {
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+            color: black;
+            font-weight: bold;
+            border: 2px solid gold;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+        .wallet-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+        }
+        .unlock-gold-btn {
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+            color: black;
+            font-weight: bold;
+            border: 2px solid gold;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            transition: all 0.3s ease;
+            animation: shine 2s infinite linear;
+        }
+        .unlock-gold-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+        }
+        @keyframes shine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#">🏠 Home</a>
+        <a href="#">⛏ Mining</a>
+        <a href="#referral">🤝 Referral</a>
     </nav>
 
     <!-- Mining Section -->
     <h1>⛏ Gold Coin Miner</h1>
-    <h1 id="bigBalance" style="font-size: 36px; color:#b8860b; font-weight:bold; margin-top:10px;">0 Gold Coins</h1>
-    <p id="status">🚀 Ready to mine...</p>
+    <h1 id="bigBalance" style="font-size: 36px; color:#FFD700; font-weight:bold; margin-top:10px;">0 🪙</h1>
+    <p id="status">Ready to mine...</p>
     <button id="mineBtn">⛏ Mine Block</button>
     <div>
         <button id="autoMiningBtn">▶ Start Auto Mining</button>
         <p id="autoMiningStatus">Auto Mining: OFF</p>
+        <p id="autoMiningLockMsg" style="color: red; font-size: 14px;"></p>
+        <button id="unlockNowBtn" style="display:none;" class="unlock-gold-btn">🔓 Unlock Now (10 Coins)</button>
+        <small id="unlockBalanceInfo" style="color: yellow; display:block; margin-top:5px;"></small>
     </div>
 
-    <!-- Referral Section -->
-    <div id="referEarn" style="margin:25px auto; max-width:500px; padding:25px; background:#fff8dc; border:2px solid gold; 
-        border-radius:15px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
-        <p style="font-weight:bold; color:#b8860b; font-size:22px;">📢 Refer and Earn <span style="color:#ff8c00;">500 Coins</span></p>
-        <a href="https://t.me/share/url?url=https://t.me/Goldecoinrobot&text=Join%20this%20Gold%20Coin%20Bot%20and%20start%20earning%20coins!"
-        target="_blank"
-        style="display:inline-block; background:#FFD700; padding:12px 20px; border-radius:10px; text-decoration:none; 
-                font-weight:bold; font-size:18px; color:black; border:2px solid gold; margin:15px 0; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
-        📤 Refer Friend
+    <!-- Refer & Earn -->
+    <div id="referral" style="margin:20px; padding:15px; background:#111; border:1px solid gold; border-radius:10px; text-align:center;">
+        <p style="font-weight:bold; color:#FFD700;">📢 Refer and Earn</p>
+        <a href="https://t.me/share/url?url=https://t.me/goldcoinmining&text=Join%20Gold%20Coin%20Mining%20and%20earn!"
+           target="_blank"
+           style="display:inline-block; background:#FFD700; padding:8px 15px; border-radius:6px; text-decoration:none; font-weight:bold; color:black; border:1px solid gold; margin-bottom:10px;">
+           📤 Refer Friend
         </a>
-        <br>
-        <!-- Join Channel Button -->
-        <a href="https://t.me/goldcoinmining" 
-           target="_blank" 
-           onclick="joinChannelReward()" 
-           style="display:inline-block; background:#FFA500; padding:12px 20px; border-radius:10px; text-decoration:none; 
-                  font-weight:bold; font-size:18px; color:black; border:2px solid gold; margin-top:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
-           📢 Join Channel & Earn 1000 Coins
-        </a>
-        <p id="referralCountText" style="font-size:18px; font-weight:bold; margin-top:10px;">Referrals: 0</p>
+        <p>Join our channel and earn 1000 🪙</p>
+        <a href="https://t.me/goldcoinmining" target="_blank" style="color:#FFD700; text-decoration:none;">🔗 Join Channel</a>
     </div>
 
-    <!-- Wallet (Hidden) -->
-    <div id="wallet" class="hidden-section" style="margin:20px; padding:20px; background:#fff8dc; border-radius:12px; border:1px solid gold;">
-        <h2 style="text-align:center; color:#b8860b;">💰 Wallet</h2>
-        <p><b>Wallet Balance:</b> <span id="walletBalance">0</span> Coins</p>
-        <p style="font-size:14px; color:#555;">(Wallet updates every 24 hours)</p>
-        <div style="margin-top:15px; background:#fff8dc; border:1px solid gold; border-radius:10px; padding:10px;">
+    <!-- Wallet -->
+    <div id="wallet" style="margin:20px; padding:20px; background:#111; border-radius:12px; border:1px solid gold; color:white;">
+        <h2 style="text-align:center; color:#FFD700;">💰 Wallet</h2>
+        <p><b>Wallet Balance:</b> <span id="walletBalance">0</span> 🪙</p>
+        <p style="font-size:14px; color:#bbb;">(Wallet updates every 24 hours)</p>
+        <button id="connectWalletBtn" class="wallet-btn">🔗 Connect Telegram Wallet</button>
+        <p id="walletStatus" style="margin-top:10px; color:#FFD700;"></p>
+        <button id="withdrawBtn" class="wallet-btn" style="display:none; margin-top: 10px;">💸 Withdraw Coins</button>
+        <div style="margin-top:15px; background:#222; border:1px solid gold; border-radius:10px; padding:10px;">
             <h3>Transaction History</h3>
-            <ul id="walletHistory" style="list-style:disc; margin-left:20px; max-height:150px; overflow-y:auto;"></ul>
+            <ul id="walletHistory" style="list-style:none; padding-left:0; max-height:150px; overflow-y:auto; color:white;"></ul>
         </div>
     </div>
 
-    <!-- Mining Stats (Hidden) -->
-    <div id="miningStats" class="hidden-section" style="margin:20px; padding:20px; background:#fff8dc; border-radius:12px; border:1px solid gold;">
-        <h2 style="text-align:center; color:#b8860b;">📊 Your Mining Statistics</h2>
-        <canvas id="miningPie" width="300" height="300"></canvas>
-        <p><b>Total Mined:</b> <span id="minedCoins">0</span> / 21,000,000</p>
-        <p><b>Remaining:</b> <span id="remainingCoins">21,000,000</span></p>
-    </div>
-
     <footer>
-        <a href="#" onclick="showSection('referEarn')">📢 Referral</a>
-        <a href="#" onclick="showSection('wallet')">💰 Wallet</a>
-        <a href="#" onclick="showSection('miningStats')">📊 Mining Stats</a>
+        <a href="#wallet">💰 Wallet</a>
+        <a href="#referral">🤝 Referral</a>
     </footer>
 
-<script>
-    const totalSupply = 21000000;
-    let blockchain = JSON.parse(localStorage.getItem("blockchain")) || [
-        { index: 0, timestamp: new Date().toISOString(), previousHash: "0", hash: "GENESIS_HASH", transactions: ["Genesis Reward 100 Gold Coins"], nonce: 0 }
-    ];
-    let balance = parseInt(localStorage.getItem("balance")) || 100;
-    let totalCoins = parseInt(localStorage.getItem("totalCoins")) || 100;
-    let referralCount = parseInt(localStorage.getItem("referralCount")) || 0;
-    let walletBalance = parseInt(localStorage.getItem("walletBalance")) || 0;
-    let lastWalletUpdate = parseInt(localStorage.getItem("lastWalletUpdate")) || 0;
-    let autoMiningStartTime = parseInt(localStorage.getItem("autoMiningStartTime")) || 0;
-    let autoMiningInterval = null;
-    let autoMiningCoinCount = 0;
+    <script>
+        const totalSupply = 21000000;
+        let blockchain = JSON.parse(localStorage.getItem("blockchain")) || [
+            { index: 0, timestamp: new Date().toISOString(), previousHash: "0", hash: "GENESIS_HASH", transactions: ["Genesis Reward 100 🪙"], nonce: 0 }
+        ];
+        let balance = parseInt(localStorage.getItem("balance")) || 100;
+        let totalCoins = parseInt(localStorage.getItem("totalCoins")) || 100;
+        let miningPower = parseFloat(localStorage.getItem("miningPower")) || 1;
+        let autoMiningLockTime = parseInt(localStorage.getItem("autoMiningLockTime")) || 0;
+        let telegramWalletConnected = JSON.parse(localStorage.getItem("telegramWalletConnected")) || false;
+        let walletHistory = JSON.parse(localStorage.getItem("walletHistory")) || [];
 
-    const ctx = document.getElementById("miningPie").getContext("2d");
-    const miningPie = new Chart(ctx, {
-        type: "pie",
-        data: {
-            labels: ["Mined Coins", "Remaining Coins"],
-            datasets: [{
-                data: [totalCoins, totalSupply - totalCoins],
-                backgroundColor: ["#FFD700", "#ccc"]
-            }]
+        const ctx = document.getElementById("miningPie")?.getContext("2d");
+
+        function updateUI() {
+            document.getElementById("bigBalance").innerText = balance + " 🪙";
+            document.getElementById("walletBalance").innerText = balance;
         }
-    });
 
-    function updateMiningChart() {
-        miningPie.data.datasets[0].data = [totalCoins, totalSupply - totalCoins];
-        document.getElementById("minedCoins").innerText = totalCoins;
-        document.getElementById("remainingCoins").innerText = totalSupply - totalCoins;
-        miningPie.update();
-    }
-
-    document.getElementById("mineBtn").onclick = mineBlock;
-    document.getElementById("autoMiningBtn").onclick = toggleAutoMining;
-
-    function mineBlock() {
-        balance += 10;
-        totalCoins += 10;
-        addBlock();
-        updateBalance();
-        updateMiningChart();
-        saveData();
-    }
-
-    function toggleAutoMining() {
-        const now = Date.now();
-        if (autoMiningStartTime && now - autoMiningStartTime > 24 * 60 * 60 * 1000) {
-            clearInterval(autoMiningInterval);
-            autoMiningInterval = null;
-            document.getElementById("autoMiningStatus").innerText = "Auto Mining: OFF (24h Expired)";
-            alert("⛏ Auto mining expired! Please restart.");
-            localStorage.removeItem("autoMiningStartTime");
-            return;
+        // Coin Rain
+        function coinRain(count = 10) {
+            for (let i = 0; i < count; i++) {
+                const coin = document.createElement("div");
+                coin.classList.add("coin");
+                coin.innerHTML = "🪙";
+                coin.style.left = Math.random() * window.innerWidth + "px";
+                coin.style.animationDuration = (Math.random() * 2 + 2) + "s";
+                document.body.appendChild(coin);
+                setTimeout(() => coin.remove(), 3000);
+            }
         }
-        if (autoMiningInterval) {
-            clearInterval(autoMiningInterval);
-            autoMiningInterval = null;
-            document.getElementById("autoMiningStatus").innerText = "Auto Mining: OFF";
-        } else {
-            autoMiningStartTime = Date.now();
-            localStorage.setItem("autoMiningStartTime", autoMiningStartTime);
-            autoMiningInterval = setInterval(autoMineCoin, 1000);
-            document.getElementById("autoMiningStatus").innerText = "Auto Mining: ON (24h)";
-        }
-    }
 
-    function autoMineCoin() {
-        const now = Date.now();
-        if (now - autoMiningStartTime > 24 * 60 * 60 * 1000) {
-            clearInterval(autoMiningInterval);
-            autoMiningInterval = null;
-            document.getElementById("autoMiningStatus").innerText = "Auto Mining: OFF (24h Expired)";
-            alert("⛏ Auto mining expired! Please restart.");
-            localStorage.removeItem("autoMiningStartTime");
-            return;
+        function generateHash() {
+            return Array.from({ length: 64 }, () => "abcdef0123456789"[Math.floor(Math.random() * 16)]).join("");
         }
-        balance += 1;
-        totalCoins += 1;
-        autoMiningCoinCount++;
-        if (autoMiningCoinCount >= 10) {
-            autoMiningCoinCount = 0;
-            addBlock();
-        }
-        updateBalance();
-        updateMiningChart();
-        saveData();
-    }
 
-    function addBlock() {
-        const previousBlock = blockchain[blockchain.length - 1];
-        const newBlock = {
-            index: blockchain.length,
-            timestamp: new Date().toISOString(),
-            previousHash: previousBlock.hash,
-            hash: generateHash(),
-            transactions: [`Mining Reward: 10 Gold Coins`],
-            nonce: blockchain.length
+        // Mining
+        document.getElementById("mineBtn").onclick = mineBlock;
+        function mineBlock() {
+            balance += 10 * miningPower;
+            totalCoins += 10 * miningPower;
+            localStorage.setItem("balance", balance);
+            localStorage.setItem("totalCoins", totalCoins);
+            updateUI();
+            coinRain(10);
+        }
+
+        // Auto Mining
+        document.getElementById("autoMiningBtn").onclick = () => {
+            if (autoMiningLockTime && Date.now() < autoMiningLockTime) {
+                alert("⛔ Auto Mining Locked!");
+                return;
+            }
+            if (window.autoMiningInterval) {
+                clearInterval(window.autoMiningInterval);
+                window.autoMiningInterval = null;
+                document.getElementById("autoMiningStatus").innerText = "Auto Mining: OFF";
+            } else {
+                window.autoMiningInterval = setInterval(mineBlock, 500);
+                document.getElementById("autoMiningStatus").innerText = "Auto Mining: ON";
+                autoMiningLockTime = Date.now() + 12 * 60 * 60 * 1000;
+                localStorage.setItem("autoMiningLockTime", autoMiningLockTime);
+            }
         };
-        blockchain.push(newBlock);
-        saveData();
-    }
 
-    function generateHash() {
-        return Array.from({length: 64}, () => "abcdef0123456789"[Math.floor(Math.random() * 16)]).join("");
-    }
+        // Unlock Now
+        document.getElementById("unlockNowBtn").onclick = () => {
+            if (balance < 10) {
+                alert("⚠ પૂરતા coins નથી!");
+                return;
+            }
+            if (confirm("🔓 Unlock કરવા માટે 10 coins કપાશે.")) {
+                balance -= 10;
+                localStorage.setItem("balance", balance);
+                autoMiningLockTime = 0;
+                localStorage.removeItem("autoMiningLockTime");
+                document.getElementById("autoMiningLockMsg").innerText = "";
+                document.getElementById("unlockNowBtn").style.display = "none";
+                document.getElementById("unlockBalanceInfo").innerText = "";
+                updateUI();
+            }
+        };
 
-    function updateBalance() {
-        document.getElementById("bigBalance").innerText = balance + " Gold Coins";
-        document.getElementById("walletBalance").innerText = walletBalance;
-        document.getElementById("referralCountText").innerText = "Referrals: " + referralCount;
-    }
-
-    function joinChannelReward() {
-        if (!localStorage.getItem("joinedChannel")) {
-            balance += 1000;
-            totalCoins += 1000;
-            localStorage.setItem("joinedChannel", "true");
-            alert("🎉 You joined the channel! 1000 coins added.");
-            updateBalance();
-            updateMiningChart();
-            saveData();
-        } else {
-            alert("✅ You already claimed the Join Channel reward!");
+        // Wallet
+        function generateTransactionHash() {
+            return "0x" + Array.from({ length: 16 }, () => "abcdef0123456789"[Math.floor(Math.random() * 16)]).join("");
         }
-    }
 
-    function saveData() {
-        localStorage.setItem("blockchain", JSON.stringify(blockchain));
-        localStorage.setItem("balance", balance);
-        localStorage.setItem("totalCoins", totalCoins);
-        localStorage.setItem("walletBalance", walletBalance);
-        localStorage.setItem("referralCount", referralCount);
-        localStorage.setItem("autoMiningStartTime", autoMiningStartTime);
-    }
+        function renderWalletHistory() {
+            const historyEl = document.getElementById("walletHistory");
+            historyEl.innerHTML = "";
+            walletHistory.slice().reverse().forEach(entry => {
+                const li = document.createElement("li");
+                li.innerHTML = `<b>${entry.amount} 🪙 Withdraw</b><br>
+                                <span style="font-size:12px; color:#aaa;">${entry.time}</span><br>
+                                <span style="font-size:12px; color:#FFD700;">Tx: ${entry.hash}</span>`;
+                historyEl.appendChild(li);
+            });
+        }
 
-    function showSection(sectionId) {
-        document.querySelectorAll('.hidden-section').forEach(sec => sec.style.display = 'none');
-        document.getElementById(sectionId).style.display = 'block';
-        window.scrollTo({ top: document.getElementById(sectionId).offsetTop - 50, behavior: 'smooth' });
-    }
+        document.getElementById("connectWalletBtn").onclick = () => {
+            if (!telegramWalletConnected) {
+                telegramWalletConnected = true;
+                localStorage.setItem("telegramWalletConnected", true);
+                document.getElementById("walletStatus").innerText = "✅ Telegram Wallet connected!";
+                document.getElementById("withdrawBtn").style.display = "inline-block";
+            } else {
+                alert("Wallet already connected.");
+            }
+        };
 
-    updateBalance();
-    updateMiningChart();
-</script>
+        document.getElementById("withdrawBtn").onclick = () => {
+            if (balance < 100) {
+                alert("⚠ ઓછામાં ઓછા 100 Coins જોઈએ!");
+                return;
+            }
+            alert("💸 Withdraw request submitted!");
+            const transaction = {
+                amount: balance,
+                time: new Date().toLocaleString(),
+                hash: generateTransactionHash()
+            };
+            walletHistory.push(transaction);
+            localStorage.setItem("walletHistory", JSON.stringify(walletHistory));
+            renderWalletHistory();
+            balance = 0;
+            localStorage.setItem("balance", balance);
+            updateUI();
+        };
+
+        if (telegramWalletConnected) {
+            document.getElementById("walletStatus").innerText = "✅ Telegram Wallet connected!";
+            document.getElementById("withdrawBtn").style.display = "inline-block";
+        }
+
+        renderWalletHistory();
+        updateUI();
+    </script>
 </body>
 </html>
